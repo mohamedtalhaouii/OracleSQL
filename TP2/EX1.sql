@@ -4,7 +4,7 @@ CREATE TABLE Auteurs(
     prenom VARCHAR2(50) NOT NULL,
     date_naissance DATE CHECK(date_naissance < TO_DATE('01-JAN-2000', 'DD-MON-YYYY')),
     email VARCHAR2(100) UNIQUE,
-    CONSTRAINT FK_id_auteur FOREIGN KEY(id_auteur)
+    CONSTRAINT fk_id_auteur FOREIGN KEY(id_auteur)
         REFERENCES Livres(id_auteur)
 );
 
@@ -14,7 +14,7 @@ CREATE TABLE Livres(
     id_auteur NUMBER,
     date_publication DATE,
     genre VARCHAR2(50) CHECK(genre IN ('Roman', 'Science-fiction', 'Fantasy')),
-    CONSTRAINT FK_id_livre FOREIGN KEY(id_livre)
+    CONSTRAINT fk_id_livre FOREIGN KEY(id_livre)
         REFERENCES Emprunts(id_livre)
 );
 
