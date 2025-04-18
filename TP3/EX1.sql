@@ -52,10 +52,10 @@ INSERT INTO Employes(nom_emp, num_emp, fonction, manager, date_emb, salaire, com
     VALUES('LEBRETON', 16094, 'COMMERCIAL', 27047, '01-JUN-91', 15000, 0, 20);
 
 INSERT INTO Employes(nom_emp, num_emp, fonction, manager, date_emb, salaire, commission, num_dept)
-    VALUES('MARTIN', 17147, 'DIRECTEUR', 27047, '10-DEC-93', 20000, 500, 20);
+    VALUES('MARTIN', 17147, 'COMMERCIAL', 27047, '10-DEC-93', 20000, 500, 20);
 
 INSERT INTO Employes(nom_emp, num_emp, fonction, manager, date_emb, salaire, commission, num_dept)
-    VALUES('PAQUEL', 27546, 'DIRECTEUR', 27047, '03-SEP-83', 22000, 2000, 20);
+    VALUES('PAQUEL', 27546, 'COMMERCIAL', 27047, '03-SEP-83', 22000, 2000, 20);
 
 INSERT INTO Employes(nom_emp, num_emp, fonction, manager, date_emb, salaire, commission, num_dept)
     VALUES('LEFEBVRE', 25935, 'COMMERCIAL', 27047, '11-JAN-84', 23500, 1500, 20);
@@ -83,3 +83,60 @@ INSERT INTO Employes(nom_emp, num_emp, fonction, manager, date_emb, salaire, com
 
 INSERT INTO Employes(nom_emp, num_emp, fonction, manager, date_emb, salaire, commission, num_dept)
     VALUES('BARA', 24831, 'ADMINISTARTIF', 16712, '10-SEP-88', 13500, NULL, 30);
+
+
+--1---------------------------------------------------------------------------------------------------------------------------
+SELECT * FROM EMPLOYES WHERE FONCTION='INGENIEUR' AND NUM_DEPT=10;
+
+--2---------------------------------------------------------------------------------------------------------------------------
+SELECT * FROM EMPLOYES WHERE FONCTION!='ADMINISTARTIF' AND EXTRACT(YEAR FROM date_emb) IN (1987, 1988);
+
+--3---------------------------------------------------------------------------------------------------------------------------
+SELECT * FROM EMPLOYES WHERE NOM_EMP LIKE '%A%' AND NOM_EMP LIKE '%M%';
+
+--4---------------------------------------------------------------------------------------------------------------------------
+SELECT * FROM EMPLOYES WHERE NOM_EMP LIKE '%A%' AND NOM_EMP LIKE '%A%';
+
+--5---------------------------------------------------------------------------------------------------------------------------
+SELECT * FROM EMPLOYES WHERE COMMISSION IS NOT NULL AND COMMISSION!=0;
+
+--6---------------------------------------------------------------------------------------------------------------------------
+SELECT * FROM EMPLOYES 
+INNER JOIN DEPARTEMENT ON DEPARTEMENT.NUM_DEPT = EMPLOYES.NUM_DEPT 
+WHERE DEPARTEMENT.LOCALE = 'DALLAS';
+
+--7---------------------------------------------------------------------------------------------------------------------------
+SELECT EMPLOYES.NOM_EMP, EMPLOYES.DATE_EMB, SELF.NOM_EMP AS NOM_MANAGER, SELF.DATE_EMB AS DATE_EMB_MANAGER 
+FROM EMPLOYES 
+SELF JOIN EMPLOYES ON SELF.NUM_EMP = EMPLOYES.MANAGER 
+WHERE SELF.DATE_EMB > EMPLOYES.DATE_EMB;
+
+--8---------------------------------------------------------------------------------------------------------------------------
+SELECT EMPLOYES.NOM_EMP, EMPLOYES.DATE_EMB FROM EMPLOYES 
+SELF JOIN EMPLOYES ON SELF.NOM_EMP = 'SIMON'
+WHERE SELF.DATE_EMB > EMPLOYES.DATE_EMB;
+
+--9---------------------------------------------------------------------------------------------------------------------------
+SELECT EMPLOYES.NOM_EMP FROM EMPLOYES 
+SELF JOIN EMPLOYES ON SELF.NOM_EMP = 'CODD'
+WHERE EXTRACT(DAY FROM SELF.DATE_EMB) = EXTRACT(DAY FROM EMPLOYES.DATE_EMB);
+
+--10--------------------------------------------------------------------------------------------------------------------------
+SELECT EMPLOYES.NOM_EMP, SELF.NOM_EMP AS NOM_MANAGER 
+FROM EMPLOYES 
+SELF JOIN EMPLOYES ON SELF.NOM_EMP = 'LAMERE' 
+WHERE SELF.NUM_EMP = EMPLOYES.MANAGER;
+
+--11--------------------------------------------------------------------------------------------------------------------------
+SELECT EMPLOYES.NOM_EMP
+FROM EMPLOYES 
+SELF JOIN EMPLOYES ON SELF.NUM_DEPT = 10 
+WHERE SELF.DATE_EMB > EMPLOYES.DATE_EMB AND EMPLOYES.NUM_DEPT!=10;
+
+--12--------------------------------------------------------------------------------------------------------------------------
+SELECT EMPLOYES.NOM_EMP, EMPLOYES.FONCTION
+FROM EMPLOYES 
+SELF JOIN EMPLOYES ON SELF.NOM_EMP = 'PAQUEL' 
+WHERE SELF.FONCTION = EMPLOYES.FONCTION AND SELF.MANAGER = EMPLOYES.MANAGER;
+
+--13--------------------------------------------------------------------------------------------------------------------------
