@@ -37,7 +37,7 @@ INSERT INTO Employes(nom_emp, num_emp, fonction, manager, date_emb, salaire, com
     VALUES('MARTIN', 16712, 'DIRECTEUR', 25717, '23-MAY-90', 40000, NULL, 30);
 
 INSERT INTO Employes(nom_emp, num_emp, fonction, manager, date_emb, salaire, commission, num_dept)
-    VALUES('DUPONT', 17574, 'ADMINISTARTIF', 16712, '03-MAY-95', 900, NULL, 30);
+    VALUES('DUPONT', 17574, 'ADMINISTARTIF', 16712, '03-MAY-95', 9000, NULL, 30);
 
 INSERT INTO Employes(nom_emp, num_emp, fonction, manager, date_emb, salaire, commission, num_dept)
     VALUES('DUPOND', 26691, 'COMMERCIAL', 27047, '04-APR-88', 25000, 2500, 20);
@@ -86,19 +86,24 @@ INSERT INTO Employes(nom_emp, num_emp, fonction, manager, date_emb, salaire, com
 
 
 --1---------------------------------------------------------------------------------------------------------------------------
-SELECT * FROM EMPLOYES WHERE FONCTION='INGENIEUR' AND NUM_DEPT=10;
+SELECT * FROM EMPLOYES 
+WHERE FONCTION='INGENIEUR' AND NUM_DEPT=10;
 
 --2---------------------------------------------------------------------------------------------------------------------------
-SELECT * FROM EMPLOYES WHERE FONCTION!='ADMINISTARTIF' AND EXTRACT(YEAR FROM date_emb) IN (1987, 1988);
+SELECT * FROM EMPLOYES 
+WHERE FONCTION!='ADMINISTARTIF' AND EXTRACT(YEAR FROM date_emb) IN (1987, 1988);
 
 --3---------------------------------------------------------------------------------------------------------------------------
-SELECT * FROM EMPLOYES WHERE NOM_EMP LIKE '%A%' AND NOM_EMP LIKE '%M%';
+SELECT * FROM EMPLOYES 
+WHERE NOM_EMP LIKE '%A%' AND NOM_EMP LIKE '%M%';
 
 --4---------------------------------------------------------------------------------------------------------------------------
-SELECT * FROM EMPLOYES WHERE NOM_EMP LIKE '%A%' AND NOM_EMP LIKE '%A%';
+SELECT * FROM EMPLOYES 
+WHERE NOM_EMP LIKE '%A%' AND NOM_EMP LIKE '%A%';
 
 --5---------------------------------------------------------------------------------------------------------------------------
-SELECT * FROM EMPLOYES WHERE COMMISSION IS NOT NULL AND COMMISSION!=0;
+SELECT * FROM EMPLOYES 
+WHERE COMMISSION IS NOT NULL AND COMMISSION!=0;
 
 --6---------------------------------------------------------------------------------------------------------------------------
 SELECT * FROM EMPLOYES 
@@ -122,21 +127,33 @@ SELF JOIN EMPLOYES ON SELF.NOM_EMP = 'CODD'
 WHERE EXTRACT(DAY FROM SELF.DATE_EMB) = EXTRACT(DAY FROM EMPLOYES.DATE_EMB);
 
 --10--------------------------------------------------------------------------------------------------------------------------
-SELECT EMPLOYES.NOM_EMP, SELF.NOM_EMP AS NOM_MANAGER 
-FROM EMPLOYES 
+SELECT EMPLOYES.NOM_EMP, SELF.NOM_EMP AS NOM_MANAGER FROM EMPLOYES 
 SELF JOIN EMPLOYES ON SELF.NOM_EMP = 'LAMERE' 
 WHERE SELF.NUM_EMP = EMPLOYES.MANAGER;
 
 --11--------------------------------------------------------------------------------------------------------------------------
-SELECT EMPLOYES.NOM_EMP
-FROM EMPLOYES 
+SELECT EMPLOYES.NOM_EMP FROM EMPLOYES 
 SELF JOIN EMPLOYES ON SELF.NUM_DEPT = 10 
 WHERE SELF.DATE_EMB > EMPLOYES.DATE_EMB AND EMPLOYES.NUM_DEPT!=10;
 
 --12--------------------------------------------------------------------------------------------------------------------------
-SELECT EMPLOYES.NOM_EMP, EMPLOYES.FONCTION
-FROM EMPLOYES 
+SELECT EMPLOYES.NOM_EMP, EMPLOYES.FONCTION FROM EMPLOYES 
 SELF JOIN EMPLOYES ON SELF.NOM_EMP = 'PAQUEL' 
 WHERE SELF.FONCTION = EMPLOYES.FONCTION AND SELF.MANAGER = EMPLOYES.MANAGER;
 
 --13--------------------------------------------------------------------------------------------------------------------------
+SELECT e1.NOM_EMP AS Research_Depart, e2.NOM_EMP AS Sales_Depart FROM EMPLOYES e1
+JOIN EMPLOYES e2 ON EXTRACT(DAY FROM e1.DATE_EMB) = EXTRACT(DAY FROM e2.DATE_EMB) 
+JOIN DEPARTEMENT d1 ON d1.NUM_DEPT = e1.NUM_DEPT
+JOIN DEPARTEMENT d2 ON d2.NUM_DEPT = e2.NUM_DEPT
+WHERE d1.NOM_DEPT = 'Research' AND d2.NOM_DEPT = 'Sales';
+
+--14--------------------------------------------------------------------------------------------------------------------------
+SELECT EMPLOYES.NOM_EMP, EMPLOYES.SALAIRE, SELF.NOM_EMP AS NOM_MANAGER, SELF.SALAIRE 
+FROM EMPLOYES 
+SELF JOIN EMPLOYES ON SELF.NUM_EMP = EMPLOYES.MANAGER 
+WHERE SELF.SALAIRE < EMPLOYES.SALAIRE;
+
+--15--------------------------------------------------------------------------------------------------------------------------
+SELECT NOM_EMP, SALAIRE, COMMISSION FROM EMPLOYES 
+WHERE COMMISSION > 1000;
