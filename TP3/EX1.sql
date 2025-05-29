@@ -110,42 +110,99 @@ SELECT * FROM EMPLOYES e1, DEPARTEMENT d1
 WHERE d1.NUM_DEPT = e1.NUM_DEPT AND d1.LOCALE = 'DALLAS';
 
 --7---------------------------------------------------------------------------------------------------------------------------
-SELECT e1.NOM_EMP, e1.DATE_EMB, e2.NOM_EMP AS NOM_MANAGER, e2.DATE_EMB AS DATE_EMB_MANAGER 
-FROM EMPLOYES e1, EMPLOYES e2
-WHERE e1.MANAGER = e2.NUM_EMP AND e1.DATE_EMB < e2.DATE_EMB;
+SELECT 
+    e1.NOM_EMP, 
+    e1.DATE_EMB, 
+    e2.NOM_EMP AS NOM_MANAGER, 
+    e2.DATE_EMB AS DATE_EMB_MANAGER 
+FROM 
+    EMPLOYES e1, 
+    EMPLOYES e2
+WHERE 
+    e1.MANAGER = e2.NUM_EMP 
+    AND e1.DATE_EMB < e2.DATE_EMB;
 
 --8---------------------------------------------------------------------------------------------------------------------------
-SELECT e2.NOM_EMP, e2.DATE_EMB FROM EMPLOYES e1, EMPLOYES e2
-WHERE e1.NOM_EMP = 'SIMON' AND e1.DATE_EMB > e2.DATE_EMB;
+SELECT 
+    e2.NOM_EMP, 
+    e2.DATE_EMB 
+FROM 
+    EMPLOYES e1, 
+    EMPLOYES e2
+WHERE 
+    e1.NOM_EMP = 'SIMON' 
+    AND e1.DATE_EMB > e2.DATE_EMB;
 
 --9---------------------------------------------------------------------------------------------------------------------------
-SELECT e2.NOM_EMP FROM EMPLOYES e1, EMPLOYES e2
-WHERE e1.NOM_EMP = 'CODD' AND EXTRACT(DAY FROM e1.DATE_EMB) = EXTRACT(DAY FROM e2.DATE_EMB);
+SELECT 
+    e2.NOM_EMP 
+FROM 
+    EMPLOYES e1, 
+    EMPLOYES e2
+WHERE 
+    e1.NOM_EMP = 'CODD' 
+    AND EXTRACT(DAY FROM e1.DATE_EMB) = EXTRACT(DAY FROM e2.DATE_EMB);
 
 --10--------------------------------------------------------------------------------------------------------------------------
-SELECT e2.NOM_EMP, e1.NOM_EMP AS NOM_MANAGER FROM EMPLOYES e1, EMPLOYES e2
-WHERE e1.NOM_EMP = 'LAMERE' AND e1.NUM_EMP = e2.MANAGER;
+SELECT 
+    e2.NOM_EMP, 
+    e1.NOM_EMP AS NOM_MANAGER 
+FROM 
+    EMPLOYES e1, 
+    EMPLOYES e2
+WHERE 
+    e1.NOM_EMP = 'LAMERE' 
+    AND e1.NUM_EMP = e2.MANAGER;
 
 --11--------------------------------------------------------------------------------------------------------------------------
-SELECT e2.NOM_EMP FROM EMPLOYES e1, EMPLOYES e2
-WHERE e1.NUM_DEPT = 10  AND e1.DATE_EMB > e2.DATE_EMB AND e2.NUM_DEPT!=10;
+SELECT 
+    e2.NOM_EMP 
+FROM 
+    EMPLOYES e1, 
+    EMPLOYES e2
+WHERE 
+    e1.NUM_DEPT = 10  
+    AND e1.DATE_EMB > e2.DATE_EMB 
+    AND e2.NUM_DEPT!=10;
 
 --12--------------------------------------------------------------------------------------------------------------------------
-SELECT e2.NOM_EMP, e2.FONCTION FROM EMPLOYES e1, EMPLOYES e2
-WHERE e1.NOM_EMP = 'PAQUEL' AND e1.FONCTION = e2.FONCTION AND e1.MANAGER = e2.MANAGER;
+SELECT 
+    e2.NOM_EMP, 
+    e2.FONCTION 
+FROM 
+    EMPLOYES e1, 
+    EMPLOYES e2
+WHERE 
+    e1.NOM_EMP = 'PAQUEL' 
+    AND e1.FONCTION = e2.FONCTION 
+    AND e1.MANAGER = e2.MANAGER;
 
 --13--------------------------------------------------------------------------------------------------------------------------
-SELECT e1.NOM_EMP AS Research_Depart, e2.NOM_EMP AS Sales_Depart FROM EMPLOYES e1, EMPLOYES e2
-JOIN EMPLOYES e2 ON EXTRACT(DAY FROM e1.DATE_EMB) = EXTRACT(DAY FROM e2.DATE_EMB) 
-JOIN DEPARTEMENT d1 ON d1.NUM_DEPT = e1.NUM_DEPT
-JOIN DEPARTEMENT d2 ON d2.NUM_DEPT = e2.NUM_DEPT
-WHERE d1.NOM_DEPT = 'Research' AND d2.NOM_DEPT = 'Sales';
+SELECT 
+    e1.nom_emp AS Research_Depart,
+    e2.nom_emp AS Sales_Depart
+FROM 
+    employes e1,
+    employes e2,
+    departement d1,
+    departement d2
+WHERE 
+    e1.num_dept = d1.num_dept
+    AND e2.num_dept = d2.num_dept
+    AND EXTRACT(DAY FROM e1.date_emb) = EXTRACT(DAY FROM e2.date_emb)
+    AND d1.nom_dept = 'Research'
+    AND d2.nom_dept = 'Sales';
 
 --14--------------------------------------------------------------------------------------------------------------------------
-SELECT e2.NOM_EMP, e2.SALAIRE, e1.NOM_EMP AS NOM_MANAGER, e1.SALAIRE 
-FROM EMPLOYES e1, EMPLOYES e2
-WHERE e1.NUM_EMP = e2.MANAGER AND e1.SALAIRE < e2.SALAIRE;
+SELECT 
+    e2.NOM_EMP, e2.SALAIRE, 
+    e1.NOM_EMP AS NOM_MANAGER, e1.SALAIRE 
+FROM 
+    EMPLOYES e1, 
+    EMPLOYES e2
+WHERE 
+    e1.NUM_EMP = e2.MANAGER 
+    AND e1.SALAIRE < e2.SALAIRE;
 
 --15--------------------------------------------------------------------------------------------------------------------------
-SELECT NOM_EMP, SALAIRE, COMMISSION FROM EMPLOYES 
-WHERE COMMISSION > 1000;
+SELECT nom_emp, TRUNC(salaire, -3) AS salaire_tronque FROM employes;
