@@ -98,11 +98,11 @@ WHERE FONCTION!='ADMINISTARTIF' AND EXTRACT(YEAR FROM date_emb) IN (1987, 1988);
 
 --3---------------------------------------------------------------------------------------------------------------------------
 SELECT * FROM EMPLOYES 
-WHERE NOM_EMP LIKE '%A%' AND NOM_EMP LIKE '%M%';
+WHERE NOM_EMP LIKE '%A%M%';
 
 --4---------------------------------------------------------------------------------------------------------------------------
 SELECT * FROM EMPLOYES 
-WHERE NOM_EMP LIKE '%A%' AND NOM_EMP LIKE '%A%';
+WHERE NOM_EMP LIKE '%A%A%';
 
 --5---------------------------------------------------------------------------------------------------------------------------
 SELECT * FROM EMPLOYES 
@@ -191,10 +191,10 @@ FROM
     departement d2
 WHERE 
     e1.num_dept = d1.num_dept
-    AND e2.num_dept = d2.num_dept
-    AND EXTRACT(DAY FROM e1.date_emb) = EXTRACT(DAY FROM e2.date_emb)
     AND d1.nom_dept = 'Research'
-    AND d2.nom_dept = 'Sales';
+    AND e2.num_dept = d2.num_dept
+    AND d2.nom_dept = 'Sales'
+    AND EXTRACT(DAY FROM e1.date_emb) = EXTRACT(DAY FROM e2.date_emb);
 
 --14--------------------------------------------------------------------------------------------------------------------------
 SELECT 
