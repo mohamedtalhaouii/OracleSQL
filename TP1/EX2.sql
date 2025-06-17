@@ -1,3 +1,6 @@
+-- Nom : Mohamed Talhaoui
+-- Filière : IIA (S4) | 2024/2025
+
 --1---------------------------------------------------------------------------------
 CREATE USER useroracle1 IDENTIFIED BY uoracle1;
 

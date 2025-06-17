@@ -1,3 +1,6 @@
+-- Nom : Mohamed Talhaoui
+-- Filière : IIA (S4) | 2024/2025
+
 -------------------------------Departement-------------------------------
 CREATE TABLE Departement(
     num_dept NUMBER PRIMARY KEY,

@@ -1,3 +1,6 @@
+-- Nom : Mohamed Talhaoui
+-- Filière : IIA (S4) | 2024/2025
+
 CREATE TABLE Auteurs(
     id_auteur NUMBER PRIMARY KEY,
     nom VARCHAR2(50) NOT NULL,

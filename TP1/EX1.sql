@@ -1,3 +1,6 @@
+-- Nom : Mohamed Talhaoui
+-- Filière : IIA (S4) | 2024/2025
+
 --1) Installation d’Oracle Database Express Edition 11g :
 ---> (https://www.oracle.com/database/technologies/xe-prior-release-downloads.html)
 
