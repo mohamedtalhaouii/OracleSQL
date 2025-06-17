@@ -3,27 +3,27 @@
 
 CREATE TABLE Auteurs(
     id_auteur NUMBER PRIMARY KEY,
-    nom VARCHAR2(50) NOT NULL,
-    prenom VARCHAR2(50) NOT NULL,
-    date_naissance DATE CHECK(date_naissance < TO_DATE('01-JAN-2000', 'DD-MON-YYYY')),
-    email VARCHAR2(100) UNIQUE,
-    CONSTRAINT fk_id_auteur FOREIGN KEY(id_auteur)
-        REFERENCES Livres(id_auteur)
+    nom CHAR(50) NOT NULL,
+    prenom CHAR(50) NOT NULL,
+    date_naissance DATE CHECK(date_naissance < TO_DATE('01-JAN-2025', 'DD-MON-YYYY')),
+    email CHAR(100) UNIQUE
 );
 
 CREATE TABLE Livres(
     id_livre NUMBER PRIMARY KEY,
-    titre VARCHAR2(50),
+    titre CHAR(50),
     id_auteur NUMBER,
+    CONSTRAINT fk_id_auteur FOREIGN KEY(id_auteur)
+        REFERENCES Auteurs(id_auteur),
     date_publication DATE,
-    genre VARCHAR2(50) CHECK(genre IN ('Roman', 'Science-fiction', 'Fantasy')),
-    CONSTRAINT fk_id_livre FOREIGN KEY(id_livre)
-        REFERENCES Emprunts(id_livre)
+    genre CHAR(50) CHECK(genre IN ('Roman', 'Science-fiction', 'Fantasy'))
 );
 
 CREATE TABLE Emprunts(
     id_emprunt NUMBER PRIMARY KEY,
     id_livre NUMBER,
+    CONSTRAINT fk_id_livre FOREIGN KEY(id_livre)
+    REFERENCES Livres(id_livre),
     date_emprunt DATE DEFAULT SYSDATE, -- SYSDATE : retourne la date et l'heure actuelles du système
     date_retour DATE,
     CONSTRAINT chk_date_retour CHECK (date_retour > date_emprunt)
