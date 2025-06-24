@@ -13,7 +13,7 @@ CONNECT useroracle1/uoracle1;
 CREATE USER useroracle2 IDENTIFIED BY uoracle2;
 
 --4---------------------------------------------------------------------------------
-GRANT CREATE TABLE TO useroracle1;
+GRANT CREATE SESSION TO useroracle1;
 
 --5---------------------------------------------------------------------------------
 GRANT CREATE SESSION, CREATE TABLE TO useroracle2;
